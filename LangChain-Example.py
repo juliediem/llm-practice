@@ -3,6 +3,7 @@
 
 # This loads the OPENAI_API_KEY from .env file
 from dotenv import load_dotenv
+
 load_dotenv()
 
 #
@@ -105,4 +106,25 @@ print(f"Sample of the first 5 elements of the vector: {embedded_query[:5]}")
 # vector is a plot point on a vector space, and you're looking for a plot point closest to your query's plot point.
 # Your query also gets converted into a plot point on the vector by the way.
 
+# Having trouble with installing faiss-cpu; Seems like it does not support newer versions of python. I'm going to
+# stop here for now.
+import faiss
+from langchain_text_splitters import CharacterTextSplitter
+from langchain_community.docstore.in_memory import InMemoryDocstore
+from langchain_community.document_loaders import TextLoader
+from langchain_community.vectorstores import FAISS
 
+loader = TextLoader("Data/dialogue.txt").load()
+
+text_splitter = CharacterTextSplitter(
+    separator="\n",
+    chunk_size=50,
+    chunk_overlap=0,
+)
+
+# text_splitter = CharacterTextSplitter(chunk_size=50, chunk_overlap=0, separator="\n", )
+documents = text_splitter.split_documents(loader)
+db = FAISS.from_documents(documents, OpenAIEmbeddings())
+query = "What is the reason for calling?"
+docs = db.similarity_search(query)
+print(docs[0].page_content)
