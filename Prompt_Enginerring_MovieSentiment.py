@@ -7,7 +7,6 @@ import os
 import numpy as np
 import pandas as pd
 
-
 load_dotenv()
 
 # Reading the data file with movies
@@ -16,8 +15,6 @@ df = pd.read_csv('Data/movie.csv', encoding='utf-8')
 df['label'] = df['label'].replace({0: 'Negative', 1: 'Positive'})
 
 df = df.sample(n=10, random_state=42)
-
-
 
 client = OpenAI()
 
