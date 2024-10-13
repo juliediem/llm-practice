@@ -106,23 +106,67 @@ model = "gpt-3.5-turbo"
 # print("Emotion:", response.content)
 
 
-# Role Prompting
+# # Role Prompting
+# from langchain_core.prompts import PromptTemplate
+# from langchain_openai import ChatOpenAI
+#
+# llm = ChatOpenAI()
+#
+# template = """
+# As a futuristic robot band conductor, I need you to help me come up with a
+# song title.
+# What's a cool song title for a song about {theme} in the year {year}?
+# """
+#
+# prompt = PromptTemplate(
+#     input_variables=["theme", "year"],
+#     template=template,
+# )
+#
+# chain = prompt | llm
+# response = chain.invoke({"theme": "autonomous robots", "year": "3030"})
+# print(response.content)
+
+
+# Chain Prompting
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 
 llm = ChatOpenAI()
 
-template = """
-As a futuristic robot band conductor, I need you to help me come up with a
-song title.
-What's a cool song title for a song about {theme} in the year {year}?
-"""
-
-prompt = PromptTemplate(
-    input_variables=["theme", "year"],
-    template=template,
+# Prompt 1
+# Creating the first prompt
+template_question = """What is the name of the famous scientist who
+developed the theory of general relativity?
+Answer: """
+# Constructing the template with question and any input variables
+prompt_question = PromptTemplate(
+    template=template_question,
+    input_variables=[]
 )
 
-chain = prompt | llm
-response = chain.invoke({"theme": "autonomous robots", "year": "3030"})
-print(response.content)
+# Prompt 2
+# Creating template for the second prompt
+template_fact = """Provide a brief description of {scientist}'s theory
+of general relativity.
+Answer: """
+prompt_fact = PromptTemplate(
+    input_variables=["scientist"],
+    template=template_fact
+)
+
+# Running the first prompt
+chain_question = prompt_question | llm
+response = chain_question.invoke({})
+
+# Extract the answer to the first prompt
+scientist = response.content
+
+# Run the second prompt
+chain_fact = prompt_fact | llm
+# Incorporate the scientist variable that you extracted into the second prompt
+response_fact = chain_fact.invoke({scientist})
+
+# Output results
+print("Scientist:", scientist)
+print("Fact:", response_fact.content)
