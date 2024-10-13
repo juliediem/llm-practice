@@ -10,7 +10,7 @@ import pandas as pd
 load_dotenv()
 
 # Reading the data file with movies
-df = pd.read_csv('Data/movie.csv', encoding='utf-8')
+df = pd.read_csv('../Data/movie.csv', encoding='utf-8')
 # Redoing the labels so that instead of boolean values, there's a sentiment
 df['label'] = df['label'].replace({0: 'Negative', 1: 'Positive'})
 

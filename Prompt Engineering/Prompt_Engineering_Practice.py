@@ -1,5 +1,7 @@
-from openai_model import OpenAIModel
 import openai
+from dotenv import load_dotenv
+
+load_dotenv()
 
 model = "gpt-3.5-turbo"
 # prompt = "You are a helpful assistant."
