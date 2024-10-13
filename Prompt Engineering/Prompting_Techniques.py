@@ -53,53 +53,76 @@ model = "gpt-3.5-turbo"
 #
 # print(response.choices[0].message.content)
 
-# Few-Shot Prompting Example
-# Using the Chat modules instead of the regular one for Chat specific features
+# # Few-Shot Prompting Example
+# # Using the Chat modules instead of the regular one for Chat specific features
+# from langchain_openai import ChatOpenAI
+# from langchain_core.prompts import ChatPromptTemplate, FewShotChatMessagePromptTemplate
+#
+# openai_model = ChatOpenAI()
+#
+# # These are the example responses
+# examples = [
+#     {"color": "red", "emotion": "passion"},
+#     {"color": "blue", "emotion": "serenity"},
+#     {"color": "green", "emotion": "tranquility"},
+# ]
+#
+# # This is the template of how the examples will be output to AI
+# example_formatter_template = """
+# Color: {color}
+# Emotion: {emotion}\n
+# """
+#
+# # Human is the input response, and the AI value, is the expected output - in this scenario the emotion associated
+# # with the color
+# example_prompt = ChatPromptTemplate(
+#     [
+#         ("human","{color}"),
+#         ("ai","{emotion}"),
+#     ]
+# )
+#
+# # Setup the FewShot Prompt Template with the above examples, and the example prompt
+# few_shot_prompt = FewShotChatMessagePromptTemplate(
+#     example_prompt=example_prompt,
+#     examples=examples,
+# )
+#
+# # Now you put together the prompt, with the training examples, and then put in your final question for the AI
+# final_prompt = ChatPromptTemplate.from_messages(
+#     [
+#         ("system","Here are some examples of colors and the emotions associated with them:"),
+#         few_shot_prompt,
+#         ("human","{input}")
+#     ]
+# )
+#
+# # Initialize the chain
+# chain = final_prompt | openai_model
+# # You're asking the model what the emotion of Purple would be
+# response = chain.invoke({"input":"Purple"})
+# # This would output the response
+# print("Color: Purple")
+# print("Emotion:", response.content)
+
+
+# Role Prompting
+from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
-from langchain_core.prompts import ChatPromptTemplate, FewShotChatMessagePromptTemplate
 
-openai_model = ChatOpenAI()
+llm = ChatOpenAI()
 
-# These are the example responses
-examples = [
-    {"color": "red", "emotion": "passion"},
-    {"color": "blue", "emotion": "serenity"},
-    {"color": "green", "emotion": "tranquility"},
-]
-
-# This is the template of how the examples will be output to AI
-example_formatter_template = """
-Color: {color}
-Emotion: {emotion}\n
+template = """
+As a futuristic robot band conductor, I need you to help me come up with a
+song title.
+What's a cool song title for a song about {theme} in the year {year}?
 """
 
-# Human is the input response, and the AI value, is the expected output - in this scenario the emotion associated
-# with the color
-example_prompt = ChatPromptTemplate(
-    [
-        ("human","{color}"),
-        ("ai","{emotion}"),
-    ]
+prompt = PromptTemplate(
+    input_variables=["theme", "year"],
+    template=template,
 )
 
-# Setup the FewShot Prompt Template with the above examples, and the example prompt
-few_shot_prompt = FewShotChatMessagePromptTemplate(
-    example_prompt=example_prompt,
-    examples=examples,
-)
-
-# Now you put together the prompt, with the training examples, and then put in your final question for the AI
-final_prompt = ChatPromptTemplate.from_messages(
-    [
-        ("system","Here are some examples of colors and the emotions associated with them:"),
-        few_shot_prompt,
-        ("human","{input}")
-    ]
-)
-
-# Initialize the chain
-chain = final_prompt | openai_model
-# You're asking the model what the emotion of Purple would be
-response = chain.invoke({"input":"Purple"})
-# This would output the response
+chain = prompt | llm
+response = chain.invoke({"theme": "autonomous robots", "year": "3030"})
 print(response.content)
