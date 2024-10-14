@@ -52,7 +52,7 @@ load_dotenv()
 # How to: Splitting text in Documents
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-with open(file="../Data/mountain.txt") as f:
+with open(file="Data/mountain.txt") as f:
     mountain_text = f.read()
 
 text_splitter = RecursiveCharacterTextSplitter(
@@ -114,7 +114,7 @@ from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_community.document_loaders import TextLoader
 from langchain_community.vectorstores import FAISS
 
-loader = TextLoader("../Data/dialogue.txt").load()
+loader = TextLoader("Data/dialogue.txt").load()
 
 text_splitter = CharacterTextSplitter(
     separator="\n",
