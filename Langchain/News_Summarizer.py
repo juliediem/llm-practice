@@ -49,13 +49,15 @@ if article_title and article_text:
     llm = ChatOpenAI(model="gpt-3.5-turbo")
 
     # Define the prompt
-    prompt_template = """You are a very good assistant that summarizes online articles.
-    Here's the article you want to summarize.
+    prompt_template = """You are an advanced AI assistant that summarizes online
+    articles into bulleted lists.
+    Here's the article you need to summarize.
     ==================
     Title: {article_title}
     {article_text}
     ==================
-    Write a summary of the previous article.
+    Now, provide a summarized version of the article in a bulleted list
+    format.
     """
     prompt = PromptTemplate(
         template=prompt_template,
