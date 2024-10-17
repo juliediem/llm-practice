@@ -32,7 +32,7 @@ if not os.path.exists("./storage"):
     print(len(nodes))
 
     # This is the identifier of my organization, found in Active Loop
-    my_activeloop_org_id = "jdiem"
+    my_activeloop_org_id = os.getenv("ACTIVELOOP_ORG_ID")
     # This is just the name of the dataset that you can freely assign
     my_activeloop_dataset_name = "LlamaIndex_intro"
     # This aggregates the above into the path
