@@ -10,6 +10,22 @@ load_dotenv()
 # Load llm
 llm = ChatOpenAI(model="gpt-3.5-turbo")
 
+#  _____                           _        ____       _           _                 
+# | ____|_  ____ _ _ __ ___  _ __ | | ___  / ___|  ___| | ___  ___| |_ ___  _ __ ___ 
+# |  _| \ \/ / _` | '_ ` _ \| '_ \| |/ _ \ \___ \ / _ \ |/ _ \/ __| __/ _ \| '__/ __|
+# | |___ >  < (_| | | | | | | |_) | |  __/  ___) |  __/ |  __/ (__| || (_) | |  \__ \
+# |_____/_/\_\__,_|_| |_| |_| .__/|_|\___| |____/ \___|_|\___|\___|\__\___/|_|  |___/
+#                           |_|                                                      
+
+#   ____ 
+#  /_ _ |
+#   | | |
+#   | | |
+#   | | |
+#  _| | |
+# |_____|
+
+
 # # Example Selectors with Manually written examples
 
 #
@@ -55,6 +71,13 @@ llm = ChatOpenAI(model="gpt-3.5-turbo")
 # response = chain.invoke({"input": "small"})
 # print(response.content)
 
+#   ___  
+#  |__ \ 
+#     ) |
+#    / / 
+#   / /_ 
+#  |____|
+             
 # Choose examples based on their semantic similarity to the input query w/ few shot method
 
 # Create Prompt Template
